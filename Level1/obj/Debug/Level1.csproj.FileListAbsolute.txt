@@ -1,0 +1,7 @@
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\bin\Debug\Level1.exe
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\bin\Debug\Level1.pdb
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\obj\Debug\Level1.csproj.AssemblyReference.cache
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\obj\Debug\Level1.csproj.SuggestedBindingRedirects.cache
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\obj\Debug\Level1.csproj.CoreCompileInputs.cache
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\obj\Debug\Level1.exe
+C:\Users\golol\Desktop\ВУЗ\Лабы\C#\ПИА\LabW_N6\Level1\obj\Debug\Level1.pdb
