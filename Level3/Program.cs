@@ -35,6 +35,7 @@ namespace Number1
                 groups[i].Students = SupportMethods.StudentsListSort(groups[i].Students);
                 Ind = SupportMethods.SearchForTheFirstUntested(groups[i].Students);
                 groups[i].DeleteBelowIndex(Ind);
+                groups[i].RefrashAverMark();
             }
             
             groups = SupportMethods.GroupsSort(groups);
@@ -78,6 +79,13 @@ namespace Number1
         {
             GroupName = groupname;
             Students = students;
+            double sum = 0;
+            foreach (var student in Students) sum += student.AverMark;
+            AverMark = sum / Students.Count;
+        }
+
+        public void RefrashAverMark()
+        {
             double sum = 0;
             foreach (var student in Students) sum += student.AverMark;
             AverMark = sum / Students.Count;
@@ -309,22 +317,15 @@ namespace Number6
                 var CurrentAnswers = doc.ReadLine().Split(';');
                 foreach (var answer in CurrentAnswers)
                 {
+                    int index = AllAnswers.Select(x => x.Anss).ToList().IndexOf(answer);
                     if (answer == "") continue;
-                    else if ((from a in AllAnswers select a.Anss).Contains(answer))
+                    else if (index >= 0)
                     {
-                        for (int AnswerInd = 0; AnswerInd < AllAnswers.Count; AnswerInd++)
-                        {
-                            if (AllAnswers[AnswerInd].Anss == answer)
-                            {
-                                AllAnswers[AnswerInd] = new Answer(AllAnswers[AnswerInd].Anss, AllAnswers[AnswerInd].Count + 1);
-                                break;
-                            }
-                        } 
+                        AllAnswers[index] = new Answer(AllAnswers[index].Anss, AllAnswers[index].Count + 1);
+                        break;
                     }
-                    else
-                    {
-                        AllAnswers.Add(new Answer(answer));
-                    }
+                    else AllAnswers.Add(new Answer(answer));
+                    
                 }
                 while (FinAnswers.Count < 5)
                 {
@@ -341,7 +342,6 @@ namespace Number6
                     FinAnswers.Add(AllAnswers[ChInd]);
                     AllAnswers.RemoveAt(ChInd);
                 }
-                // Вывод 5 самых популярныз ответов
                 Console.WriteLine($"Question: {QuestionCounter}");
                 foreach (Answer answer in FinAnswers)
                 {
