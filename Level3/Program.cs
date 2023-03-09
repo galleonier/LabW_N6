@@ -349,7 +349,7 @@ namespace Number6
             foreach (var answer in CurrentAnswers)
             {
                 int index = AllAnswers.Select(x => x.Anss).ToList().IndexOf(answer);
-                if (answer == "") continue;
+                if (answer == " ") continue;
                 else if (index >= 0) AllAnswers[index] = new Answer(AllAnswers[index].Anss, AllAnswers[index].Count + 1);
                 else AllAnswers.Add(new Answer(answer));
             }
@@ -389,10 +389,10 @@ namespace Number6
                     {
                         Ch = AllAnswers[i].Count;
                         ChInd = i;
-                        FinAnswers.Add(AllAnswers[ChInd]);
-                        AllAnswers.RemoveAt(ChInd);
                     }
                 }
+                FinAnswers.Add(AllAnswers[ChInd]);
+                AllAnswers.RemoveAt(ChInd);
             }
             return FinAnswers;
         }
