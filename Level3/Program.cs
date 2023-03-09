@@ -13,11 +13,7 @@ namespace Level3
     {
         public static void Main(string[] args)
         {
-            var sw = new Stopwatch();
-            sw.Start();
             Number6.Program.Start();
-            sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
         }
     }
 }
