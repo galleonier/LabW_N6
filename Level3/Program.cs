@@ -315,42 +315,13 @@ namespace Number6
                 var AllAnswers = new List<Answer>();
                 var FinAnswers = new List<Answer>();
                 var CurrentAnswers = doc.ReadLine().Split(';');
-                foreach (var answer in CurrentAnswers)
-                {
-                    int index = AllAnswers.Select(x => x.Anss).ToList().IndexOf(answer);
-                    if (answer == "") continue;
-                    else if (index >= 0)
-                    {
-                        AllAnswers[index] = new Answer(AllAnswers[index].Anss, AllAnswers[index].Count + 1);
-                        break;
-                    }
-                    else AllAnswers.Add(new Answer(answer));
-                    
-                }
-                while (FinAnswers.Count < 5)
-                {
-                    int Ch = AllAnswers[0].Count;
-                    int ChInd = 0;
-                    for (int i = 0; i < AllAnswers.Count; i++)
-                    {
-                        if (AllAnswers[i].Count >= Ch)
-                        {
-                            Ch = AllAnswers[i].Count;
-                            ChInd = i;
-                        }
-                    }
-                    FinAnswers.Add(AllAnswers[ChInd]);
-                    AllAnswers.RemoveAt(ChInd);
-                }
+                AllAnswers = SupportMethods.FinListMaker(CurrentAnswers); 
+                FinAnswers = SupportMethods.FinAnswersListMaker(AllAnswers);
                 Console.WriteLine($"Question: {QuestionCounter}");
-                foreach (Answer answer in FinAnswers)
-                {
-                    SupportMethods.PrintParticipant(answer, CurrentAnswers.Length);
-                }
+                SupportMethods.PrintParticipant(FinAnswers, CurrentAnswers.Length);
                 QuestionCounter++;
                 Console.WriteLine();
             }
-
         }
     }
 
@@ -367,9 +338,63 @@ namespace Number6
 
     public static class SupportMethods
     {
-        public static void PrintParticipant(Answer answer, int AnsCount)
+        public static void PrintParticipant(List<Answer> answers, int AnsCount)
         {
-            Console.WriteLine($"Answer: {answer.Anss} - {answer.Count} \t Result: {(answer.Count*100)/AnsCount}%");
+            foreach (Answer answer in answers) Console.WriteLine($"Answer: {answer.Anss} - {answer.Count} \t Result: {(answer.Count*100)/AnsCount}%");
+        }
+
+        public static List<Answer> FinListMaker(string[] CurrentAnswers)
+        {
+            var AllAnswers = new List<Answer>();
+            foreach (var answer in CurrentAnswers)
+            {
+                int index = AllAnswers.Select(x => x.Anss).ToList().IndexOf(answer);
+                if (answer == "") continue;
+                else if (index >= 0) AllAnswers[index] = new Answer(AllAnswers[index].Anss, AllAnswers[index].Count + 1);
+                else AllAnswers.Add(new Answer(answer));
+            }
+            /*foreach (var answer in CurrentAnswers)
+                {
+                    if (answer == "") continue;
+                    else if ((from a in AllAnswers select a.Anss).Contains(answer))
+                    {
+                        for (int AnswerInd = 0; AnswerInd < AllAnswers.Count; AnswerInd++)
+                        {
+                            if (AllAnswers[AnswerInd].Anss == answer)
+                            {
+                                AllAnswers[AnswerInd] = new Answer(AllAnswers[AnswerInd].Anss,
+                                    AllAnswers[AnswerInd].Count + 1);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        AllAnswers.Add(new Answer(answer));
+                    }
+                }*/
+            return AllAnswers;
+        }
+
+        public static List<Answer> FinAnswersListMaker(List<Answer> AllAnswers )
+        {
+            List<Answer> FinAnswers = new List<Answer>();
+            while (FinAnswers.Count < 5)
+            {
+                int Ch = AllAnswers[0].Count;
+                int ChInd = 0;
+                for (int i = 0; i < AllAnswers.Count; i++)
+                {
+                    if (AllAnswers[i].Count >= Ch)
+                    {
+                        Ch = AllAnswers[i].Count;
+                        ChInd = i;
+                        FinAnswers.Add(AllAnswers[ChInd]);
+                        AllAnswers.RemoveAt(ChInd);
+                    }
+                }
+            }
+            return FinAnswers;
         }
     }
 }
