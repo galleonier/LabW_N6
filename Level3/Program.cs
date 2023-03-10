@@ -37,9 +37,7 @@ namespace Number1
                 groups[i].DeleteBelowIndex(Ind);
                 groups[i].RefrashAverMark();
             }
-            
             groups = SupportMethods.GroupsSort(groups);
-            
             Console.WriteLine("Group\tAverage mark");
             foreach (var group in groups)
             {
@@ -313,12 +311,12 @@ namespace Number6
             while (!doc.EndOfStream)
             {
                 var AllAnswers = new List<Answer>();
-                var FinAnswers = new List<Answer>();
                 var CurrentAnswers = doc.ReadLine().Split(';');
-                AllAnswers = SupportMethods.FinListMaker(CurrentAnswers); 
-                FinAnswers = SupportMethods.FinAnswersListMaker(AllAnswers);
+                AllAnswers = SupportMethods.FinListMaker(CurrentAnswers);
+                Console.WriteLine("");
+                AllAnswers = SupportMethods.FinAnswersListMaker(AllAnswers);
                 Console.WriteLine($"Question: {QuestionCounter}");
-                SupportMethods.PrintParticipant(FinAnswers, CurrentAnswers.Length);
+                SupportMethods.PrintParticipant(AllAnswers, CurrentAnswers.Length);
                 QuestionCounter++;
                 Console.WriteLine();
             }
@@ -340,9 +338,8 @@ namespace Number6
     {
         public static void PrintParticipant(List<Answer> answers, int AnsCount)
         {
-            foreach (Answer answer in answers) Console.WriteLine($"Answer: {answer.Anss} - {answer.Count} \t Result: {(answer.Count*100)/AnsCount}%");
+            for (int i = 0; i < 6; i++) Console.WriteLine($"Answer: {answers[i].Anss} - {answers[i].Count} \t Result: {(answers[i].Count*100)/AnsCount}%");
         }
-
         public static List<Answer> FinListMaker(string[] CurrentAnswers)
         {
             var AllAnswers = new List<Answer>();
@@ -376,25 +373,22 @@ namespace Number6
             return AllAnswers;
         }
 
-        public static List<Answer> FinAnswersListMaker(List<Answer> AllAnswers )
+        public static List<Answer> FinAnswersListMaker(List<Answer> list )
         {
-            List<Answer> FinAnswers = new List<Answer>();
-            while (FinAnswers.Count < 5)
-            {
-                int Ch = AllAnswers[0].Count;
-                int ChInd = 0;
-                for (int i = 0; i < AllAnswers.Count; i++)
-                {
-                    if (AllAnswers[i].Count >= Ch)
-                    {
-                        Ch = AllAnswers[i].Count;
-                        ChInd = i;
+            for (int i = 0; i < 6; i++)
+            { 
+                Answer temp; 
+                for (int j = i + 1; j < list.Count; j++) 
+                { 
+                    if (list[j].Count > list[i].Count) 
+                    { 
+                        temp = list[i]; 
+                        list[i] = list[j]; 
+                        list[j] = temp;
                     }
                 }
-                FinAnswers.Add(AllAnswers[ChInd]);
-                AllAnswers.RemoveAt(ChInd);
             }
-            return FinAnswers;
+            return list;
         }
     }
 }
